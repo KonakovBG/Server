@@ -1,0 +1,9 @@
+.contact_content form{
+	margin-top: 40px; margin-right: 50px; 
+}
+.contact_content form input{
+	display: block; width: 200px; height: 30px; margin: 15px 0px; outline: none;
+}
+.contact_content form label{
+	font-size: 24px; 
+}
