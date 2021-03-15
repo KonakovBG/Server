@@ -1,52 +1,30 @@
 body{
-	background-color: #EDEAE3;
-	margin: 0; font-family: 'Pompiere';
+	background-color: #F3F4F6; margin: 0; 
 }
 a{
-	text-decoration: none;
-	color: black;
+	text-decoration: none; color: black !important; font-size: 18px !important;
 }
-/*Header*/
-.contact_book-header{
-	padding-left: 550px;
+
+.contact_content{
+	margin-top: 50px;
 }
-.contact_book-header{
-	border-bottom: 1px solid black; box-shadow: 3px 3px 3px;
+.header{
+	display: flex; flex-direction: row; justify-content: space-around;
 }
-.header-menu ul{
-	display: flex; flex-direction: row;font-size: 24px; list-style: none; padding-left: 0px;
-}	
-.header-menu li{
-	cursor: pointer;
-}
-.header-menu ul a{
-	margin-right: 30px;
+.header button{
+	position: relative; right: 40px;margin-top: 15px;
 }
 
 /*Contact Form*/
-.contact_book-content{
-	margin-top: 40px; padding-left: 550px;
-}
-.contact_form{
-	display: inline-block;
-}
-.contact_form ul li{
-	display: block;
-	margin-bottom: 30px;
-	font-size: 22px;
-}
-.contact_form ul{
-	padding: 0;
-}
-.contact_form input{
-	display: flex; flex-direction: row; justify-content: space-around; width: 200px; height: 20px; outline: none;
 
-}
-#contact_form-submit{
-	width: 100px !important;
-	margin: auto;
-}
 #result{
 	height: 100px; color: green; font-size: 22px;
+}
+.contact_form{
+	width: 700px;
+	margin: auto;
+}
+.contact_form input{
+	border: solid 1px grey; height: 30px; outline: none;
 }
 

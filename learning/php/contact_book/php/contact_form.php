@@ -1,19 +1,71 @@
 <?php
 
-$array_data[] = [$_POST['fname'], $_POST['lname'], $_POST['phone'],$_POST['email']];
+require __DIR__ . '/../vendor/autoload.php';
 
-$column_names[] = ['First Name','Last Name','Phone','Email'];
+$error = [];
+$contact_info = [];
 
-$data_fp = fopen('../csv/data.csv', 'a');
+function test_input($data){
+	$data = trim($data);
+	$data = stripcslashes($data);
+	$data = htmlspecialchars($data);
+	return $data;
+}
 
-if(filesize('../csv/data.csv') === 0){
-	foreach ($column_names as $names) {
-		fputcsv($data_fp, $names);
+$rules = [
+	'fname' => 'required',
+	'lname' => 'required',
+	'phone' => 'requiredPhone',
+	'email' => 'email',
+];
+
+foreach ($_POST as $name => $value) {
+	$rule = $rules[$name];
+
+	if ($rule == 'required') {
+		if (empty($value)) {
+			
+			header('Location: ../contacts.php');
+
+			exit;
+		} else {			
+			test_input($value);
+
+ 			$contact_info[] = trim($value);
+		}
+	} else if ($rule == 'email') {
+		if (empty($value) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+			header('Location: ../contacts.php');
+
+			exit;
+		} else {
+			$contact_info[] = trim($value);
+		}
+	} else if($rule == 'requiredPhone'){
+		if (empty($value) || strlen($value) != 10){
+			header('Location: ../contacts.php');
+
+			exit;
+		} else{
+			$contact_info[] = trim($value);
+		}
+
 	}
 }
 
-foreach ($array_data as $data) {
-	fputcsv($data_fp, $data);
-}
+$column_names = ['First Name', 'Last Name', 'Phone', 'Email'];
 
-fclose($data_fp);
+$writer = \League\Csv\Writer::createFromPath('../csv/data.csv', 'a');
+
+$writer->insertOne($contact_info);
+
+// if (filesize('../csv/data.csv') === 0) {
+// 	$writer->insertOne($column_names);
+// }
+
+// $writer->insertOne($contact_info);
+
+header('Location: ../contacts.php');
+
+
+

@@ -1,34 +1,39 @@
 <?php 
 
+require __DIR__ . '/../vendor/autoload.php';
+
 $index = $_POST['index'];
 
-$data_fp = fopen('../csv/data.csv', 'a+');
-
-$data_array = [$_POST['fname'], $_POST['lname'], $_POST['phone'], $_POST['email']];
+$contact_info = [$_POST['fname'], $_POST['lname'], $_POST['phone'], $_POST['email']];
 
 $counter = 0;
 
 $data = [];
 
-while (($data_row = fgetcsv($data_fp)) !== false) {
+$reader = \League\Csv\Reader::createFromPath('../csv/data.csv', 'r');
 
-	if($counter == $index){
-		$data[] = $data_array;
+$records = $reader->getRecords();
+
+foreach ($records as $record) {
+	if ($counter == $index ) {
+		$data[] = $contact_info;
 	} else {
-		$data[] = $data_row;
+		$data[] = $record;
 	}
+
 	$counter++;
 }
 
-fclose($data_fp);
+$writer = \League\Csv\Writer::createFromPath('../csv/data.csv', 'w+');
 
-$data_fp = fopen('../csv/data.csv', 'w+');
+$writer->insertAll($data);
 
-foreach ($data as $data_row) {
-	fputcsv($data_fp, $data_row);
-}
+header("Location: ../contacts.php",TRUE,301);
 
-fclose($data_fp);
+
+
+
+
 
 
 
